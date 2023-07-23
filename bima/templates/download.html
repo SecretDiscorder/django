@@ -1,0 +1,29 @@
+<!-- download.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>YouTube Downloader</title>
+</head>
+<body>
+    <h1>YouTube Downloader</h1>
+    {% if error_message %}
+        <p>{{ error_message }}</p>
+    {% else %}
+        <form method="post">
+            {% csrf_token %}
+            <label for="youtube_link">Enter YouTube Link:</label>
+            <input type="text" name="youtube_link" id="youtube_link" required>
+            <button type="submit">Download as Audio</button>
+        </form>
+        {% if title and streams %}
+            <h2>{{ title }}</h2>
+            <ul>
+                {% for stream in streams %}
+                    <li><a href="{{ stream.url }}" download>{{ stream.mime_type }}</a></li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endif %}
+</body>
+</html>

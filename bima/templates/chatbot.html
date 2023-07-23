@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <title>Chatbot Pybot</title>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ 
+</head>
+<body>
+    <h1>Chatbot Fitur Utama Pybot</h1>
+    <div id="chat-container">
+        <div id="chat-log">
+            <!-- Bot welcome message -->
+            <div class="bot-message">Selamat datang di Chatbot Fitur Utama Pybot!<br>
+                Ketik "download [url_video_instagram]" untuk mendownload video Instagram.<br>
+                Ketik "translate [teks] [kode_bahasa]" untuk menerjemahkan teks.<br>
+                Misalnya: "translate Hello en" untuk menerjemahkan "Hello" ke bahasa Inggris.
+            </div>
+        </div>
+        <div id="user-input">
+            <!-- User input form -->
+            <form id="chat-form" action="/chatbot/" method="post">
+        <input type="text" id="user-input-field" name="user_input" placeholder="Ketik pesan di sini...">
+        <button type="submit" id="send-button" disabled>Kirim</button>
+            </form>
+        </div>
+    <script>
+        const chatContainer = document.getElementById('chat-container');
+        const chatLog = document.getElementById('chat-log');
+        const chatForm = document.getElementById('chat-form');
+        const userInputField = document.getElementById('user-input-field');
+   userInputField.addEventListener('input', function () {
+        const userMessage = userInputField.value.trim();
+        const sendButton = document.getElementById('send-button');
+
+        if (userMessage === '') {
+            sendButton.disabled = true; // Disable the button when the input is empty
+        } else {
+            sendButton.disabled = false; // Enable the button when there is input
+        }
+    });
+        function addChatMessage(message, isUserMessage) {
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add(isUserMessage ? 'user-message' : 'bot-message');
+            messageDiv.innerHTML = message;
+
+            // Tambahkan pesan ke chat-log
+            chatLog.appendChild(messageDiv);
+
+            // Scroll ke bagian bawah chat-log agar pesan baru terlihat
+            chatLog.scrollTop = chatLog.scrollHeight;
+        }
+// ...
+
+
+
+// ...
+    // Add an event listener to the form submission
+    chatForm.addEventListener('submit', function (event) {
+        event.preventDefault();
+        const userMessage = userInputField.value.trim();
+        if (userMessage !== '') {
+            sendMessageToChatbot(userMessage);
+        }
+    });
+
+    function sendMessageToChatbot(userMessage) {
+        // Clear the input field after submitting the message
+        userInputField.value = '';
+
+        // Check if the user input is not empty
+        if (userMessage.trim() === '') {
+            // User input is empty, display an error message in the chat-log
+            addChatMessage('<strong>Error:</strong> Pybot tidak menerima input kosong.', false);
+            return;
+        }
+
+        // Send the message to the server using AJAX
+        fetch('/chatbot/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8',
+                'X-CSRFToken': getCookie('csrftoken')
+            },
+            body: JSON.stringify({ user_input: userMessage })
+        })
+        .then(response => response.json())
+        .then(data => {
+            const botMessage = '<strong>Pybot:</strong> ' + data.response;
+            addChatMessage(botMessage, false);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+
+        // Fungsi untuk mendapatkan nilai cookie CSRF token
+        function getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+        }
+    </script>
+</body>
+</html>
