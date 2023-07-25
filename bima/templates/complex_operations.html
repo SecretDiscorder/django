@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Konversi Bilangan Kompleks</title>
+</head>
+<body>
+    <h1>Konversi Bilangan Kompleks</h1>
+    <form method="post" id="complexForm">
+        {% csrf_token %}
+        <label for="pilihan">Pilih Menu Konversi:</label>
+        <select name="pilihan" id="menuSelect" required>
+            <option value="kartesius">Kartesius (a+bi)</option>
+            <option value="polar">Polar (r(cosθ + i sinθ))</option>
+            <option value="eksponen">Eksponen (re^(ix°))</option>
+            <option value="custom_kartesius">Custom Kartesius</option>
+            <option value="custom_polar">Custom Polar</option>
+            <option value="custom_eksponen">Custom Eksponen</option>
+        </select><br>
+
+        <div class="input-fields" data-input-type="kartesius">
+            <h2>Konversi Kartesius ke Bentuk Lain:</h2>
+            <!-- Display Kartesius result here -->
+            <p id="kartesius_result">{{ kartesius_result }}</p>
+
+            <label for="real_a">Bagian Real (a):</label>
+            <input type="number" step="any" name="real_a" value="{{ real_a }}" required>
+            <label for="imag_b">Bagian Imajiner (b):</label>
+            <input type="number" step="any" name="imag_b" value="{{ imag_b }}" required>
+        </div>
+
+        <div class="input-fields" data-input-type="polar">
+            <h2>Konversi Polar ke Bentuk Lain:</h2>
+            <!-- Display Polar result here -->
+            <p id="polar_result">{{ polar_result }}</p>
+
+            <label for="r">Magnitude (r):</label>
+            <input type="number" step="any" name="r" value="{{ r }}" required>
+            <label for="theta">Sudut (θ°):</label>
+            <input type="number" step="any" name="theta" value="{{ theta_degrees }}" required>
+        </div>
+
+        <div class="input-fields" data-input-type="eksponen">
+            <h2>Konversi Eksponen ke Bentuk Lain:</h2>
+            <!-- Display Eksponen result here -->
+            <p id="eksponen_result">{{ eksponen_result }}</p>
+
+            <label for="exp_r">Magnitude (r):</label>
+            <input type="number" step="any" name="exp_r" value="{{ r }}" required>
+            <label for="exp_theta">Sudut (θ°):</label>
+            <input type="number" step="any" name="exp_theta" value="{{ theta_degrees }}" required>
+        </div>
+
+<!-- ... (kode sebelumnya) ... -->
+
+<div class="input-fields" data-input-type="custom_kartesius">
+    <h2>Konversi ke Bentuk Custom Kartesius:</h2>
+    <p>Hasil Konversi Custom Kartesius: <span id="custom_kartesius_result"></span></p>
+    <button type="button" id="convertCustomKartesius">Konversi Custom Kartesius</button>
+</div>
+
+<div class="input-fields" data-input-type="custom_polar">
+    <h2>Konversi ke Bentuk Custom Polar:</h2>
+    <p>Hasil Konversi Custom Polar: <span id="custom_polar_result"></span></p>
+    <button type="button" id="convertCustomPolar">Konversi Custom Polar</button>
+</div>
+
+<div class="input-fields" data-input-type="custom_eksponen">
+    <h2>Konversi ke Bentuk Custom Eksponen:</h2>
+    <p>Hasil Konversi Custom Eksponen: <span id="custom_eksponen_result"></span></p>
+    <button type="button" id="convertCustomEksponen">Konversi Custom Eksponen</button>
+</div>
+
+<button type="submit">Konversi</button>
+
+<!-- ... (kode selanjutnya) ... -->
+
+
+        <button type="submit">Konversi</button>
+    </form>
+
+    <script>
+        document.getElementById('menuSelect').addEventListener('change', function() {
+            const selectedOption = this.value;
+
+            // Hide all input fields
+            const allFields = document.getElementsByClassName('input-fields');
+            for (let i = 0; i < allFields.length; i++) {
+                allFields[i].style.display = 'none';
+            }
+
+            // Show input fields based on the selected option
+            document.querySelector(`[data-input-type="${selectedOption}"]`).style.display = 'block';
+
+            // Reset the custom result display when changing the menu option
+            document.getElementById('custom_kartesius_result').textContent = '';
+            document.getElementById('custom_polar_result').textContent = '';
+            document.getElementById('custom_eksponen_result').textContent = '';
+        });
+
+        // Submit the form when the "Konversi" button is clicked
+        document.querySelector('button[type="submit"]').addEventListener('click', function() {
+            document.getElementById('complexForm').submit();
+        });
+
+        // Function to handle custom kartesius conversion
+        document.getElementById('convertCustomKartesius').addEventListener('click', function() {
+            const real_a = document.querySelector('[name="real_a"]').value;
+            const imag_b = document.querySelector('[name="imag_b"]').value;
+
+            // Validate input values here (if needed)
+
+            // Perform the conversion logic and display the result
+            const resultStr = `${real_a} + ${imag_b}i`;
+            document.getElementById('custom_kartesius_result').textContent = resultStr;
+        });
+
+        // Function to handle custom polar conversion
+        document.getElementById('convertCustomPolar').addEventListener('click', function() {
+            const r = document.querySelector('[name="r"]').value;
+            const theta = document.querySelector('[name="theta"]').value;
+
+            // Validate input values here (if needed)
+
+            // Perform the conversion logic and display the result
+            const resultStr = `${r} * (cos(${theta} degrees) + sin(${theta} degrees) * i)`;
+            document.getElementById('custom_polar_result').textContent = resultStr;
+        });
+
+        // Function to handle custom eksponen conversion
+        document.getElementById('convertCustomEksponen').addEventListener('click', function() {
+            const r = document.querySelector('[name="exp_r"]').value;
+            const theta = document.querySelector('[name="exp_theta"]').value;
+
+            // Validate input values here (if needed)
+
+            // Perform the conversion logic and display the result
+            const resultStr = `${r} * exp(${theta} * i)`;
+            document.getElementById('custom_eksponen_result').textContent = resultStr;
+        });
+    </script>
+</body>
+</html>

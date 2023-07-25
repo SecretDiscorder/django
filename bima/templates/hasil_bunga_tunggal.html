@@ -1,0 +1,22 @@
+<!-- templates/nama_aplikasi/hasil_bunga_tunggal.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hasil Perhitungan Bunga Tunggal</title>
+</head>
+<body>
+    <h1>Hasil Perhitungan Bunga Tunggal</h1>
+    {% if m_awal %}
+        <p>Modal Awal (M Awal): {{ m_awal }}</p>
+    {% endif %}
+    {% if m_akhir %}
+        <p>Modal Akhir (M Akhir): {{ m_akhir }}</p>
+    {% endif %}
+    {% if n %}
+        <p>Jumlah Periode (n): {{ n }}</p>
+    {% endif %}
+    {% if b %}
+        <p>Tingkat Bunga (b): {{ b }}</p>
+    {% endif %}
+</body>
+</html>

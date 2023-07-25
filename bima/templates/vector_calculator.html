@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Vector Calculator</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+    <h1>Vector Calculator</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label for="x1">Komponen X Vektor Pertama:</label>
+        <input type="number" name="x1" required><br>
+        <label for="y1">Komponen Y Vektor Pertama:</label>
+        <input type="number" name="y1" required><br>
+        <label for="x2">Komponen X Vektor Kedua:</label>
+        <input type="number" name="x2" required><br>
+        <label for="y2">Komponen Y Vektor Kedua:</label>
+        <input type="number" name="y2" required><br>
+        <input type="submit" value="Hitung">
+    </form>
+    
+    {% if hasil %}
+    <h2>Hasil penjumlahan vektor:</h2>
+    <p>Komponen X Vektor Pertama: {{ hasil.x1 }}</p>
+    <p>Komponen Y Vektor Pertama: {{ hasil.y1 }}</p>
+    <p>Komponen X Vektor Kedua: {{ hasil.x2 }}</p>
+    <p>Komponen Y Vektor Kedua: {{ hasil.y2 }}</p>
+    <p>Hasil Penjumlahan X: {{ hasil.x_jumlah }}</p>
+    <p>Hasil Penjumlahan Y: {{ hasil.y_jumlah }}</p>
+    <p>Besar Vektor Hasil Penjumlahan: {{ hasil.besar_vektor }}</p>
+    <p>Arah Vektor (Radian): {{ hasil.arah_radian }}</p>
+    <p>Arah Vektor (Derajat): {{ hasil.arah_derajat }}</p>
+    <h2>Grafik Vektor Hasil Penjumlahan:</h2>
+    <div id="plotly_chart"></div>
+
+    <script>
+        var plot_data = {
+            x: [{{ plot_data.x1 }}, {{ plot_data.x2 }}, {{ plot_data.x_jumlah }}],
+            y: [{{ plot_data.y1 }}, {{ plot_data.y2 }}, {{ plot_data.y_jumlah }}],
+            type: 'scatter',
+            mode: 'lines+markers',
+            name: 'Vectors',
+        };
+
+        var layout = {
+            xaxis: {title: 'Komponen X'},
+            yaxis: {title: 'Komponen Y'},
+            title: 'Grafik Vektor Hasil Penjumlahan',
+            showlegend: true
+        };
+
+        Plotly.newPlot('plotly_chart', [plot_data], layout);
+    </script>
+    {% endif %}
+</body>
+</html>

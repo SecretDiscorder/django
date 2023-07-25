@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Compose Functions</title>
+</head>
+<body>
+    <h1>Compose Functions</h1>
+    <form method="post">
+        {% csrf_token %}
+        Enter the function 'f(x)': <input type="text" name="f_input" required><br>
+        Enter the function 'g(x)': <input type="text" name="g_input" required><br>
+        <input type="submit" value="Calculate">
+    </form>
+</body>
+</html>

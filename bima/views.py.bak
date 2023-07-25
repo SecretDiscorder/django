@@ -7,7 +7,6 @@ import math
 import math
 from django.shortcuts import render
 from pytube import YouTube
-from django.shortcuts import render
 
 def hitung_minus_b(m_awal, m_akhir, n):
     # Hitung nilai minus b berdasarkan rumus bunga majemuk
@@ -44,24 +43,6 @@ def bunga_majemuk(request):
         })
     
     return render(request, 'bunga_majemuk.html')
-
-from django.shortcuts import render
-# views.py
-
-from django.http import JsonResponse
-
-from django.http import HttpResponse
-from django.views.decorators.csrf import csrf_exempt
-
-from googletrans import Translator
-from pytube import YouTube
-
-# nama_aplikasi/views.py
-# nama_aplikasi/views.py
-# nama_aplikasi/views.py
-from django.shortcuts import render
-from django.shortcuts import render
-import sympy
 
 def compose_functions(request):
     if request.method == 'POST':

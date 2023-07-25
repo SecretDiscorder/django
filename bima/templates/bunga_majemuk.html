@@ -1,0 +1,29 @@
+<!-- templates/nama_aplikasi/bunga_tunggal.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kalkulator Bunga Majemuk</title>
+</head>
+<body>
+    <h1>Kalkulator Bunga Majemuk</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label for="pilihan">Pilih Menu:</label>
+        <select name="pilihan" required>
+            <option value="modal_awal">Modal Awal (M Awal)</option>
+            <option value="modal_akhir">Modal Akhir (M Akhir)</option>
+            <option value="jangka_waktu">Jumlah Periode (n)</option>
+            <option value="tingkat_bunga">Tingkat Bunga (b)</option>
+        </select><br>
+        <label for="m_awal">Jumlah Awal (M Awal):</label>
+        <input type="number" name="m_awal" required><br>
+        <label for="m_akhir">Jumlah Akhir (M Akhir):</label>
+        <input type="number" name="m_akhir" required><br>
+        <label for="n">Jumlah Periode (n):</label>
+        <input type="number" name="n" required><br>
+        <label for="b">Tingkat Bunga (b):</label>
+        <input type="number" step="any" name="b" required><br>
+        <button type="submit">Hitung</button>
+    </form>
+</body>
+</html>

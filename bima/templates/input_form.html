@@ -1,0 +1,23 @@
+<!-- nama_aplikasi/templates/input_form.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Input Form</title>
+</head>
+<body>
+    <h1>Input Form</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label for="f_expression">f(x) = </label>
+        <input type="text" name="f_expression" required>
+        <br>
+        <label for="g_expression">g(x) = </label>
+        <input type="text" name="g_expression" required>
+        <br>
+        <label for="x_value">x value = </label>
+        <input type="text" name="x_value" required>
+        <br>
+        <input type="submit" value="Calculate">
+    </form>
+</body>
+</html>
